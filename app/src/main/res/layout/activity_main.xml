@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#6EBCAD"
+                android:backgroundTint="#66C3E8"
                 android:text="CA"
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#6EBCAD"
+                android:backgroundTint="#66C3E8"
                 android:text="C"
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -47,7 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#F46336"
+                android:backgroundTint="#EF7853"
                 android:text="⌫"
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -57,7 +57,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#6EBCAD"
+                android:backgroundTint="#66C3E8"
+                android:onClick="clickOperador"
                 android:text="÷"
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -103,7 +104,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#6EBCAD"
+                android:backgroundTint="#66C3E8"
+                android:onClick="clickOperador"
                 android:text="×"
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -149,7 +151,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#6EBCAD"
+                android:backgroundTint="#66C3E8"
+                android:onClick="clickOperador"
                 android:text="-"
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -195,7 +198,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#6EBCAD"
+                android:backgroundTint="#66C3E8"
+                android:onClick="clickOperador"
                 android:text="+"
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -239,7 +243,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#DCD1D1"
+                android:backgroundTint="#F1EEEE"
                 android:text="="
                 android:textColor="#2B2A2A"
                 android:textSize="20sp" />
@@ -248,8 +252,8 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="188dp"
-        android:layout_height="52dp"
+        android:layout_width="275dp"
+        android:layout_height="53dp"
         android:textAlignment="viewEnd"
         android:textColor="#FFFFFF"
         android:textSize="48sp"
