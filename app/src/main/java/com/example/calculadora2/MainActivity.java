@@ -1,3 +1,9 @@
+/**
+ * @author: Poly Escobar Sanchez
+ * @version: 1.0
+ * @date: 2023-11-22
+ */
+
 package com.example.calculadora2;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     String operador = "";
     String primerNum = "";
     String segundoNum = "";
-
+    String resultadoNum = "";
     Button btnDiv;
     Button btnMulti;
     Button btnMas;
@@ -28,60 +34,97 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Enlazar la vista TextView para mostrar la operación
         operacion = findViewById(R.id.textView1);
 
-        // Inicializar botones después de setContentView
+        // Inicializar botones buscando su id
         btnDiv = findViewById(R.id.btnDiv);
         btnMulti = findViewById(R.id.btnMulti);
         btnMas = findViewById(R.id.btnMas);
         btnMenos = findViewById(R.id.btnRes);
+
+        // Deshabilitar operadores al inicio de la aplicación
         deshabilitarOperadores();
 
+        // Enlazar el botón de igual
         btnIgual = findViewById(R.id.btnIgual);
-        btnIgual.setEnabled(false);
+
     }
 
     public void clickNum(View view){
         Button button = (Button) view;
 
-        // Obtén el texto del botón seleccionado
         String buttonText = button.getText().toString();
 
+        if (resultadoNum.isEmpty()) {
+            // Verificar si no hay ningún primer número ni operador establecido
+            if (primerNum.isEmpty() && operador.isEmpty()) {
+                // Habilitar los operadores para iniciar una nueva operación
+                habilitarOperadores();
+            }
 
-        // Si primerNum está vacío y no hay un operador seleccionado aún
-        if (primerNum.isEmpty() && operador.isEmpty()) {
-            // Habilitar operadores después de ingresar el primer número
-            habilitarOperadores();
-        }
+            // Comprobar si ya se ha seleccionado un operador
+            if (!operador.isEmpty()) {
+                // Añadir el número a segundoNum si ya hay un operador
+                segundoNum += buttonText;
+            } else {
+                // Agregar el número a primerNum si no hay operador seleccionado
+                primerNum += buttonText;
+            }
 
-        // Si ya se ha ingresado un operador y se está agregando segundoNum
-        if (!operador.isEmpty()) {
-            segundoNum += buttonText;
+            // Actualizar el TextView con los números ingresados
+            actualizarTextView();
+
+            // Habilitar el botón de igual si todos los campos necesarios para la operación están completos
+            if (!primerNum.isEmpty() && !operador.isEmpty() && !segundoNum.isEmpty()) {
+                btnIgual.setEnabled(true);
+            }
         } else {
-            primerNum += buttonText;
-        }
+            // Comenzar una nueva operación con el número presionado
+            // Establecer el número presionado como el nuevo primer número
+            primerNum = buttonText;
+            // Reiniciar el resultado previo
+            resultadoNum = "";
+            // Reiniciar el segundo número
+            segundoNum = "";
+            // Reiniciar el operador
+            operador = "";
+            // Deshabilitar el botón de igualdad
+            btnIgual.setEnabled(false);
 
-        // Actualizar la operación mostrada en el TextView
-        actualizarTextView();
-
-        if (!primerNum.isEmpty() && !operador.isEmpty() && !segundoNum.isEmpty()) {
-            btnIgual.setEnabled(true);
+            // Actualizar el TextView con el nuevo número
+            actualizarTextView();
         }
     }
+
 
     public void clickOperador(View view){
         Button button = (Button) view;
 
         String buttonText = button.getText().toString();
 
-        operador += buttonText;
+        // Si hay un resultado existente, actualizar primerNum con el resultado y continuar con el operador seleccionado
+        if (!resultadoNum.isEmpty()) {
+            primerNum = resultadoNum;
+            // Reiniciar el resultado
+            resultadoNum = "";
+            // Reiniciar el segundo número
+            segundoNum = "";
+            // Establecer el operador seleccionado
+            operador = buttonText;
+            // Deshabilitar el botón de igual
+            btnIgual.setEnabled(false);
+        } else {
+            // Establecer el operador seleccionado
+            operador = buttonText;
+            // Deshabilitar otros operadores hasta que se ingrese el segundo número
+            deshabilitarOperadores();
+        }
 
-        // Deshabilitar operadores después de seleccionar uno
-        deshabilitarOperadores();
-
-        // Actualizar la operación mostrada en el TextView
+        // Actualizar el TextView con el operador seleccionado
         actualizarTextView();
 
+        // Habilitar el botón de igual si todos los campos necesarios para la operación están completos
         if (!primerNum.isEmpty() && !operador.isEmpty() && !segundoNum.isEmpty()) {
             btnIgual.setEnabled(true);
         }
@@ -89,27 +132,33 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void clickCA(View view){
+        // Limpiar todos los campos posibles del textView
         primerNum = "";
         operador = "";
         segundoNum = "";
+        resultadoNum = "";
 
+        // Actualizar el textView
         actualizarTextView();
 
+        // Deshabilitamos los operadores y el boton igual
         deshabilitarOperadores();
-
         btnIgual.setEnabled(false);
     }
 
     public void clicIgual(View view) {
+        // Verificar si la operación está bien construida
         if (operador.isEmpty() || segundoNum.isEmpty()) {
             return; // No hacer nada si la operación no está bien construida
         }
 
+        // Convertir los números de String a enteros
         int num1 = Integer.parseInt(primerNum);
         int num2 = Integer.parseInt(segundoNum);
 
         int resultado = 0;
 
+        // Realizar la operación correspondiente según el operador seleccionado
         switch (operador) {
             case "+":
                 resultado = num1 + num2;
@@ -138,15 +187,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        // Mostrar el resultado en el TextView de operación
         operacion.setText(String.valueOf(resultado));
-        primerNum += resultado;
-        primerNum = String.valueOf(resultado);
+        resultadoNum += String.valueOf(resultado); // Agregar el resultado a la variable de resultadoNum
+        primerNum = resultadoNum; // Establecer el resultado como el nuevo primer número
 
-        segundoNum = "";
-        operador = "";
-        habilitarOperadores();
+        segundoNum = ""; // Reiniciar el segundo número
+        operador = ""; // Reiniciar el operador
+        habilitarOperadores();  // Habilitar los operadores para una nueva operación
     }
 
+
+    // Metodo para deshabilitar los operadores
     private void deshabilitarOperadores(){
         btnMas.setEnabled(false);
         btnMenos.setEnabled(false);
@@ -154,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         btnDiv.setEnabled(false);
     }
 
+    // Metodo para habilitar los operadores
     private void habilitarOperadores(){
         btnMas.setEnabled(true);
         btnMenos.setEnabled(true);
@@ -161,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
         btnDiv.setEnabled(true);
     }
 
+    // Metodo para actualizar el textViews
     private void actualizarTextView(){
         String operacionMostrar = primerNum + " " + operador + " " + segundoNum;
         operacion.setText(operacionMostrar);
