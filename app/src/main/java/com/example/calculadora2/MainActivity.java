@@ -1,5 +1,5 @@
 /**
- * @author: Poly Escobar Sanchez
+ * @author: Poly Angel Escobar Sanchez
  * @version: 1.0
  * @date: 2023-11-22
  */
